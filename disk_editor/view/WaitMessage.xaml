@@ -1,0 +1,12 @@
+﻿<Window x:Class="disk_editor.WaitMessage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:gif="clr-namespace:XamlAnimatedGif;assembly=XamlAnimatedGif"
+        Title="Waiting" Height="60" Width="350" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowStyle="None" Background="{DynamicResource BackgroundBrush}">
+    <Border BorderBrush="{DynamicResource HorizontalRuleBrush2}" BorderThickness="2">
+        <Grid>
+            <Image Name="ani" gif:AnimationBehavior.SourceUri="static/images/webtv-animated.gif" gif:AnimationBehavior.RepeatBehavior="Forever" Height="50" Width="50" Opacity="0.5" />
+            <Label Name="wait_message" Content="Waiting..." HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Width="276" Foreground="{DynamicResource TitleBrush}" FontWeight="UltraBold" Height="30"/>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,256 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:self="clr-namespace:disk_editor">
+    <self:IsEqualConverter x:Key="IsEqualConverter" />
+    <self:PartitionMountPointConverter x:Key="PartitionMountPointConverter" />
+    <self:PartitionSizeConverter x:Key="PartitionSizeConverter" />
+    <self:PartitionTypeConverter x:Key="PartitionTypeConverter" />
+    <self:PartitionStatusFlagsConverter x:Key="PartitionStatusFlagsConverter" />
+    <self:PartitionTypeColorConverter x:Key="PartitionTypeColorConverter" />
+    <self:PartitionWidthConverter x:Key="PartitionWidthConverter" />
+    <self:PartitionDelegateConverter x:Key="PartitionDelegateConverter" />
+    <LinearGradientBrush x:Key="PartitionSelectedStyle" StartPoint="0,0" EndPoint="4,4" MappingMode="Absolute" SpreadMethod="Repeat">
+        <GradientStop Offset="0" Color="{DynamicResource DarkBackgroundColor}"/>
+        <GradientStop Offset="0.1" Color="{DynamicResource DarkBackgroundColor}"/>
+        <GradientStop Offset="0.1" Color="{DynamicResource BackgroundHighlightColor}"/>
+        <GradientStop Offset="0.9" Color="{DynamicResource BackgroundHighlightColor}"/>
+        <GradientStop Offset="0.9" Color="{DynamicResource DarkBackgroundColor}"/>
+        <GradientStop Offset="1" Color="{DynamicResource DarkBackgroundColor}"/>
+    </LinearGradientBrush>
+
+
+    <Style x:Key="PartitionOuter1LStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource DarkBackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="1,1,0,0" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedPartition.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{StaticResource SelectBoxBrush1}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="PartitionOuter1RStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{StaticResource HorizontalRuleBrush2}" />
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedPartition.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush4}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <!--- -->
+    <Style x:Key="PartitionOuter2LStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="1,1,0,0" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedPartition.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush2}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="PartitionOuter2RStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedPartition.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush3}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <!--- -->
+    <Style x:Key="PartitionOuter3LStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="1,1,0,0" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedPartition.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush4}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="PartitionOuter3RStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedPartition.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush2}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <!--- -->
+    <Style x:Key="PartitionOuter4LStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="1,1,0,0" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedPartition.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush2}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="PartitionOuter4RStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedPartition.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{StaticResource SelectBoxBackgroundBrush}" />
+                <Setter Property="Background" Value="{StaticResource PartitionSelectedStyle}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <DataTemplate x:Key="PartitionTemplate">
+        <Button Margin="0" Padding="0" Cursor="Hand">
+            <Button.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectPartitionCommand, RelativeSource={RelativeSource AncestorType={x:Type self:DiskView}}}" CommandParameter="{Binding}"/>
+                <MouseBinding MouseAction="RightClick" Command="{Binding SelectPartitionCommand, RelativeSource={RelativeSource AncestorType={x:Type self:DiskView}}}" CommandParameter="{Binding}"/>
+                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding DoubleClickCommand, RelativeSource={RelativeSource AncestorType={x:Type self:DiskView}}}" CommandParameter="{Binding}"/>
+            </Button.InputBindings>
+            <Button.Template>
+                <ControlTemplate>
+                    <Border Style="{StaticResource PartitionOuter1LStyleTrigger}">
+                        <Border Style="{StaticResource PartitionOuter1RStyleTrigger}">
+                            <Border Style="{StaticResource PartitionOuter2LStyleTrigger}">
+                                <Border Style="{StaticResource PartitionOuter2RStyleTrigger}">
+                                    <Border Style="{StaticResource PartitionOuter3LStyleTrigger}">
+                                        <Border Style="{StaticResource PartitionOuter3RStyleTrigger}">
+                                            <Border Style="{StaticResource PartitionOuter4LStyleTrigger}">
+                                                <Border Style="{StaticResource PartitionOuter4RStyleTrigger}">
+
+                                                    <Grid Uid="{Binding id}">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="12"/>
+                                                            <RowDefinition/>
+                                                        </Grid.RowDefinitions>
+
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition>
+                                                                <ColumnDefinition.Width>
+                                                                    <MultiBinding Converter="{StaticResource PartitionWidthConverter}" >
+                                                                        <Binding Path="ActualWidth" RelativeSource="{RelativeSource AncestorType={x:Type self:MainWindow}}" />
+                                                                        <Binding Path="." ElementName="PartitionCollection" />
+                                                                        <Binding Path="." />
+                                                                    </MultiBinding>
+                                                                </ColumnDefinition.Width>
+                                                            </ColumnDefinition>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Border BorderBrush="{DynamicResource BackgroundAlternateBrush}" Background="{Binding Converter={StaticResource PartitionTypeColorConverter}}" BorderThickness="0,0,1,1" Padding="0" Grid.Column="0" Grid.Row="0">
+                                                            <Border BorderBrush="{DynamicResource DarkBackgroundBrush}" BorderThickness="1,1,0,0" Padding="0"/>
+                                                        </Border>
+
+                                                        <Grid Grid.Column="0" Grid.Row="1" Margin="0,5,0,0">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="20"/>
+                                                                <RowDefinition Height="20"/>
+                                                                <RowDefinition Height="20"/>
+                                                                <RowDefinition Height="20"/>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Background="{DynamicResource BackgroundBrush}" Grid.Column="0" Grid.Row="0">
+                                                                <Label Content="{Binding server, Converter={StaticResource PartitionMountPointConverter}}" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="3,1,0,0" Padding="0"/>
+                                                                <Label Content="{Binding name}" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="0" Padding="0"/>
+                                                            </TextBlock>
+                                                            <TextBlock Background="{DynamicResource BackgroundBrush}" Grid.Column="0" Grid.Row="1" Padding="8,0,0,0">
+                                                                <Label Content="{Binding Converter={StaticResource PartitionSizeConverter}}" FontSize="12" Foreground="{DynamicResource TextBrush}"  Margin="0" Padding="0"/>
+                                                                <Label Content="{Binding Converter={StaticResource PartitionTypeConverter}}" FontSize="12" Foreground="{DynamicResource TextBrush}"  Margin="0" Padding="0"/>
+                                                            </TextBlock>
+                                                            <TextBlock Background="{DynamicResource BackgroundBrush}" Grid.Column="0" Padding="8,0,0,0">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding disk.layout}" Value="{x:Static self:DiskLayout.UTV}">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                                <Setter Property="Grid.Row" Value="2"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                                <Label Content="{Binding Converter={StaticResource PartitionDelegateConverter}}" FontWeight="Normal" Foreground="{DynamicResource TextBrush}"  Margin="0" Padding="0"/>
+                                                            </TextBlock>
+                                                            <TextBlock Background="{DynamicResource BackgroundBrush}" Grid.Column="0" Padding="8,0,0,0">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                                                        <Setter Property="Grid.Row" Value="2"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding disk.layout}" Value="{x:Static self:DiskLayout.UTV}">
+                                                                                <Setter Property="Grid.Row" Value="3"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                                <Label Content="{Binding Converter={StaticResource PartitionStatusFlagsConverter}}" FontSize="12" Foreground="{DynamicResource TextBrush}" Margin="0" Padding="0"/>
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Border>
+                                            </Border>
+                                        </Border>
+                                    </Border>
+                                </Border>
+                            </Border>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </DataTemplate>
+    <DataTemplate x:Key="PartitionCollectionTemplate">
+        <Border x:Name="PartitionContainer" BorderBrush="{DynamicResource DarkBackgroundBrush}" Background="{DynamicResource BackgroundBrush}" BorderThickness="1,1,0,0">
+            <Border BorderBrush="{DynamicResource HorizontalRuleBrush2}" BorderThickness="0,0,1,1" Padding="1">
+                <ItemsControl x:Name="PartitionCollection" ItemsSource="{Binding}" ItemTemplate="{StaticResource PartitionTemplate}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Border>
+        </Border>
+    </DataTemplate>
+</ResourceDictionary>

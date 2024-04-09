@@ -1,0 +1,284 @@
+﻿<Fluent:RibbonWindow x:Class="disk_editor.AddDisk"
+        Style="{StaticResource {x:Type Fluent:RibbonWindow}}"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
+        xmlns:self="clr-namespace:disk_editor"
+        Title="Add Disk" Height="316" Width="732" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="static/images/add-physical-disk.png">
+    <Window.Resources>
+        <self:WMIDiskIconConverter x:Key="WMIDiskIconConverter" />
+        <self:WMIDiskSizeConverter x:Key="WMIDiskSizeConverter" />
+    </Window.Resources>
+    <Grid>
+        <Border 
+            BorderThickness="2"
+            BorderBrush="{DynamicResource HorizontalRuleBrush1}"
+            Height="242" 
+            Width="712"
+            Margin="0,-35,0,0">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding add_disk_dialog.RunningInWine}" Value="True"/>
+                                <Condition Binding="{Binding physical_disks.Count}" Value="0"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding add_disk_dialog.RunningInWine}" Value="True"/>
+                                <Condition Binding="{Binding physical_disks}" Value="{x:Null}"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <TextBlock
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"
+                  TextWrapping="Wrap"
+                  FontWeight="Bold"
+                  FontSize="18"
+                  Text="Wine detected. Please add a disk manually by selecting 'Insert Disk' below."/>
+        </Border>        
+        <ListView Name="disk_list" 
+                  MouseDoubleClick="on_add_disk_click"
+                  SelectedItem="{Binding selected_disk, Mode=TwoWay}"
+                  HorizontalAlignment="Left" 
+                  Margin="10,10,0,0" 
+                  VerticalAlignment="Top" 
+                  Height="242" 
+                  Width="712">
+            <ListView.Style>
+                <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource {x:Type ListView}}">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding add_disk_dialog.RunningInWine}" Value="True"/>
+                                <Condition Binding="{Binding physical_disks.Count}" Value="0"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding add_disk_dialog.RunningInWine}" Value="True"/>
+                                <Condition Binding="{Binding physical_disks}" Value="{x:Null}"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Style>
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Width="200" Header="Name">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Grid.Column="0" Grid.Row="0">
+                                            <Image Source="{Binding Converter={StaticResource WMIDiskIconConverter}}" Height="16" Width="16" Margin="0,0,0,4"/>
+                                            <Label Content="{Binding title}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Path" Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding device_id}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Security" Width="250">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding security_info}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Capacity" Width="88">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Converter={StaticResource WMIDiskSizeConverter}}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Refresh" 
+                Command="{Binding refresh_command}"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Width="75"                 
+                Margin="10,261,0,0"
+                RenderTransformOrigin="-0.533,0.45">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        
+                        <DataTrigger Binding="{Binding loading}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding add_disk_dialog.RunningInWine}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Content="Insert Disk" 
+                Command="{Binding insert_disk_manually}"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Width="100"                 
+                Margin="10,261,0,0"
+                RenderTransformOrigin="-0.533,0.45">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding loading}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding add_disk_dialog.RunningInWine}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+
+        <Button Content="Cancel" 
+                Command="{Binding cancel_command}"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top"
+                Width="75">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Setter Property="Margin" Value="542,261,0,0" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding selected_disk.is_security_available}" Value="True"/>
+                                <Condition Binding="{Binding selected_disk.is_security_locked}" Value="False"/>
+                                <Condition Binding="{Binding selected_disk.is_security_frozen}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Margin" Value="437,261,0,0"/>
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding loading}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Content="Disk Frozen :(" 
+                Command="{Binding add_disk_command}"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Margin="622,261,0,0" 
+                Width="100">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="IsEnabled" Value="False" />
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding selected_disk.is_security_locked}" Value="True"/>
+                                <Condition Binding="{Binding selected_disk.is_security_frozen}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>        
+        <Button Content="Unlock &amp; Add" 
+                Command="{Binding add_disk_command}"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Margin="622,261,0,0" 
+                Width="100">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding selected_disk.is_security_locked}" Value="True"/>
+                                <Condition Binding="{Binding selected_disk.is_security_frozen}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding loading}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Content="Lock Disk" 
+                Command="{Binding lock_disk_command}"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Margin="517,261,0,0" 
+                Width="100">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding selected_disk.is_security_available}" Value="True"/>
+                                <Condition Binding="{Binding selected_disk.is_security_locked}" Value="False"/>
+                                <Condition Binding="{Binding selected_disk.is_security_frozen}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding loading}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>        
+        <Button Content="Add" 
+                Command="{Binding add_disk_command}"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Margin="622,261,0,0" 
+                Width="100">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding selected_disk.is_security_locked}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding loading}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+    </Grid>
+</Fluent:RibbonWindow>

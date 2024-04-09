@@ -1,0 +1,160 @@
+﻿<Fluent:RibbonWindow x:Class="disk_editor.TellyScriptEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:syntax="clr-namespace:UI.SyntaxBox;assembly=UI.SyntaxBox"
+        xmlns:local="clr-namespace:disk_editor"
+        mc:Ignorable="d"
+        Title="TellyScript" Height="500" Width="800" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38"/>
+            <RowDefinition Height="44"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="44"/>
+        </Grid.RowDefinitions>
+        <Label Name="tellyscript_tagline" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="" FontWeight="Bold"/>
+        <Grid Grid.Column="0" Grid.Row="1">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,20,0">
+                    <Button Content="Import Tokenized" Command="{Binding import_tokenized_command}" Width="100" Margin="0,0,5,0">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="IsEnabled" Value="True"/>
+                                <Style.Triggers>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Content="Export Tokenized" Command="{Binding export_tokenized_command}" Width="100">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="IsEnabled" Value="True"/>
+                                <Style.Triggers>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>                    
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button Content="Import Script" Command="{Binding import_script_command}" Width="100" Margin="0,0,5,0">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="IsEnabled" Value="True"/>
+                                <Style.Triggers>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Content="Export Script" Command="{Binding export_script_command}" Width="100">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="IsEnabled" Value="True"/>
+                                <Style.Triggers>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>                    
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <TextBox 
+            x:Name="tellyscript_source"
+            Grid.Column="0" 
+            Grid.Row="2"
+            FontFamily="{DynamicResource WindowFontFamily}"
+            FontSize="11pt"
+            Background="{DynamicResource BackgroundBrush}"
+            Foreground="#FFDCDCDC"
+            BorderBrush="{DynamicResource HorizontalRuleBrush1}"
+            BorderThickness="0,2,0,2"
+            Padding="0"
+            AcceptsReturn="True" 
+            AcceptsTab="True"
+            Width="Auto"
+            VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Auto"
+            syntax:SyntaxBox.Enable="True"
+            syntax:SyntaxBox.ExpandTabs="True"
+            syntax:SyntaxBox.AutoIndent="True"
+            syntax:SyntaxBox.ShowLineNumbers="True"
+            syntax:SyntaxBox.Background="{DynamicResource BackgroundBrush}"
+            syntax:SyntaxBox.LineNumbersBackground="{DynamicResource BackgroundAlternateBrush}"
+            syntax:SyntaxBox.LineNumbersForeground="{DynamicResource TitleBrush}"
+        >
+            <syntax:SyntaxBox.SyntaxDrivers>
+                <syntax:SyntaxConfig>
+                    <!-- Keywords -->
+                    <syntax:KeywordRule Foreground="#FF3D8ED6" Keywords="int,char,return,if,else,while,for,break" />
+
+                    <!-- Operators -->
+                    <syntax:KeywordRule Foreground="#FFD2D8C0" Keywords="!,+,-,/,*,%,=,&amp;,^,|,&lt;,&gt;,;,&#44;" WholeWordsOnly="False" />
+                    <!--<syntax:RegexRule Op="Line" Foreground="Purple" Pattern="[\!+-\/\*%=&amp;\^|\?&lt;&gt;]" />-->
+                    
+
+                    <!-- TellyScript intrinsics -->
+                    <syntax:KeywordRule Foreground="#FF4EC9B0" Keywords="setstatus,stack,PAPChat,DialIAP,gDisguiseRate,DialByIndex,WhatTimeIsIt,gUsername,gPAPPassword,gCHAPSecret,gEnable56K,gDisguiseRatev,gNVRAMMayBeInvalid,setprogresstext,setprogresspercentage,setprogressdirty,setprogressmode,getoispprimarynumber,getoisppassword,getoisploginname,getoispprovidername,getoispsecondarynumber,getoispauthmode,setnameserversc,setnameserversc,setnameserversc,setnameserversc,setnameserversc,setnameserversc,setnameservers,printf,getdisablecallwaiting,getcallwaitingprefix,getdialoutsideprefix,getlongdistanceprefix,getdialoutsideline,getuseoisp,getbrokenpbx,displaydialingnumber,sprintf,rasdial,modem_getdcerate,rashangup,modem_setcontrol,uptime,version,setabort,getppvnumber,parsesystemtime,gettimezone,getdatetimegmt,getdatetimelocal,gethour,getminute,getsecond,getday,getmonth,getyear,getdayofweek,getpreregnumber,getphonesettings,alert,setprogress,setconnectionstats,setlocalpopcount,beep,new,free,memcmp,memmove,memset,memchr,strcat,strcmp,strcpy,strncpy,strlen,strchr,strncmp,strstr,atoi,itoa,display,format,ticks,time,delay,idle,waitfor,getbytes,getline,sendbyte,sendstr,flush,countpending,winkdtr,setdtr,getdtr,setbaud,getpapmode,setpapmode,getusername,setusername,getpassword,setpassword,getforcehook,setforcehook,getloopcurrent,getwindowsize,setwindowsize,get_manufacturer,getsecret,system_getsecretvalid,system_getssn,system_debugger,getserialnumber,computefcs,setnameservice,setfirmwareversion,get56kenabled,setworkingnumber,getworkingnumber,setfullpopnumber,setconnectretrycount,getconnectretrycount,GetScriptProgressMode,SetScriptProgressMode,GetScriptProgressTextFromScript,SetScriptProgressTextFromScript,GetScriptProgressPercentageFromScript,GetScriptProgressIsDirty,SetScriptProgressIsDirty,SetScriptProgressPercentageFromScript,setinitialreadtimeout,setani,ReadModemReg,WriteModemReg,GetFileSystemData,system_openfilestream,system_closefilestream,modem_blastdata,modem_delayms,modem_parseresult,debug_setleds,system_warmboot,system_coldboot,system_nvvalid,system_getboxfeatureflags,system_getfeatureflags,system_getmaxfeatureflag,system_setcallprereg,PrepModemForDownload,DirectSend,setflowcontrol,getflowcontrol,vers,startppp,getpppresult,getpppresponsetext,enablemodem,disablemodem,dialerror,genericerror,getconnectreason,connectingwithvideoad,notimplemented,Error,Abort" />
+
+                    <!-- String -->
+                    <syntax:RegexRule Op="Line" Foreground="#FFD69D85" Pattern="&quot;(?:[^&quot;\\]|\\.)*&quot;" />
+
+                    <!-- Verbatim string -->
+                    <syntax:RegexRule Op="Block" Foreground="#FFD69D85" Pattern="@&quot;(?:[^&quot;])*&quot;" />
+
+                    <!-- Comment -->
+                    <syntax:RegexRule Op="Line" Foreground="#FF578B43" Pattern="//.*" />
+
+                    <!-- Multiline comment -->
+                    <syntax:RegexRule Op="Block" Foreground="#FF578B43" Pattern="(?m)/\*[^*]*\*+(?:[^\/*][^*]*\*+)*/" />
+
+                    <!-- MattMan! -->
+                    <syntax:KeywordRule Foreground="#FF665a2c" Keywords="mattman,MattMan,Mattman,MATTMAN,TURDInc,Turdinc,TurdInc,turdinc,TURDINC,Fart,fart,FART" />
+                </syntax:SyntaxConfig>
+            </syntax:SyntaxBox.SyntaxDrivers>
+        </TextBox>
+        <Grid Grid.Column="0" Grid.Row="3">
+            <Button Name="copy_all_button" Command="{Binding copy_all_command}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Margin" Value="10,10,0,0"/>
+                        <Setter Property="Content" Value="Copy All"/>
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Style.Triggers>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button Name="cancel_button" Command="{Binding cancel_command}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Margin" Value="0,10,94,0"/>
+                        <Setter Property="Content" Value="Cancel"/>
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Style.Triggers>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Name="submit_button" Content="Save" Command="{Binding save_command}" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="75">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Style.Triggers>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+    </Grid>
+</Fluent:RibbonWindow>

@@ -1,0 +1,122 @@
+﻿<Fluent:RibbonWindow x:Class="disk_editor.AddPartition"
+        Style="{StaticResource {x:Type Fluent:RibbonWindow}}"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:self="clr-namespace:disk_editor"
+        Title="Add Partition" Height="230" Width="323" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Icon="static/images/add-partition.png">
+    <Grid>
+        <Label Content="Partition Type:" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="new_partition_type" SelectionChanged="on_partition_type_change" SelectedIndex="0" HorizontalAlignment="Left" Margin="120,14,0,0" VerticalAlignment="Top" Width="174"/>
+
+        <Label Content="Partition Name:" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top"/>
+        <xctk:MaskedTextBox Name="new_partition_name" HorizontalAlignment="Left" MaxLength="32" Height="23" Margin="120,44,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Width="174" FontSize="14"/>
+
+        <Label Content="Partition Size:" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+        <xctk:SingleUpDown Name="new_partition_size" Minimum="2" Maximum="1" Value="2" HorizontalAlignment="Left" Margin="120,72,0,0" VerticalAlignment="Top" Width="130" Height="23"/>
+        <Label Content="MiB" HorizontalAlignment="Left" Margin="255,72,0,0" VerticalAlignment="Top" Width="39"/>
+
+        <Label Content="Delegate File:" HorizontalAlignment="Left" Margin="10,101,0,0" VerticalAlignment="Top">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding add_partition_dialog.SelectedPartitionType}" Value="{x:Static self:PartitionType._DELEGATED}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <xctk:MaskedTextBox Name="new_delegate_filename" HorizontalAlignment="Left" MaxLength="32" Height="23" Margin="120,101,0,0" TextWrapping="Wrap" Text="DVRFsd.dll" VerticalAlignment="Top" Width="174" FontSize="14">
+            <xctk:MaskedTextBox.Style>
+                <Style TargetType="{x:Type xctk:MaskedTextBox}" BasedOn="{StaticResource {x:Type xctk:MaskedTextBox}}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding add_partition_dialog.SelectedPartitionType}" Value="{x:Static self:PartitionType._DELEGATED}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </xctk:MaskedTextBox.Style>
+        </xctk:MaskedTextBox>
+
+        <Label Content="Size Range:" HorizontalAlignment="Left" Margin="10,131,0,0" VerticalAlignment="Top" Width="90">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding add_partition_dialog.SelectedPartitionType}" Value="{x:Static self:PartitionType._DELEGATED}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <Label Name="new_partition_size_range" Content="-" HorizontalAlignment="Left" Margin="120,131,0,0" VerticalAlignment="Top" Width="187">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding add_partition_dialog.SelectedPartitionType}" Value="{x:Static self:PartitionType._DELEGATED}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+
+        <Label Content="Minimum Size:" HorizontalAlignment="Left" Margin="10,101,0,0" VerticalAlignment="Top" Width="90">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding add_partition_dialog.SelectedPartitionType}" Value="{x:Static self:PartitionType._DELEGATED}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <Label Name="new_partition_min_size" Content="-" HorizontalAlignment="Left" Margin="120,101,0,0" VerticalAlignment="Top" Width="187">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding add_partition_dialog.SelectedPartitionType}" Value="{x:Static self:PartitionType._DELEGATED}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <Label Content="Maximum Size:" HorizontalAlignment="Left" Margin="10,131,0,0" VerticalAlignment="Top">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding add_partition_dialog.SelectedPartitionType}" Value="{x:Static self:PartitionType._DELEGATED}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <Label Name="new_partition_max_size" Content="-" HorizontalAlignment="Left" Margin="120,131,0,0" VerticalAlignment="Top" Width="174">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding add_partition_dialog.SelectedPartitionType}" Value="{x:Static self:PartitionType._DELEGATED}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+
+        <Button Command="{Binding cancel_command}" Content="Cancel" HorizontalAlignment="Left" Margin="139,171,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Command="{Binding add_partition_command}" Content="Create" HorizontalAlignment="Left" Margin="219,171,0,0" VerticalAlignment="Top" Width="75"/>
+    </Grid>
+</Fluent:RibbonWindow>

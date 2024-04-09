@@ -1,0 +1,60 @@
+﻿<Fluent:RibbonWindow x:Class="disk_editor.MountPartition"
+        Style="{StaticResource {x:Type Fluent:RibbonWindow}}"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
+        xmlns:self="clr-namespace:disk_editor"
+        Title="Mount Partition" Height="165" Width="251" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Icon="static/images/mount-partition.png">
+    <Grid>
+        <Label
+            Content="Partition:" 
+            HorizontalAlignment="Left" 
+            Margin="4,10,0,0" 
+            VerticalAlignment="Top"
+            Width="74"/>
+        <Label 
+            Content="{Binding part.name}" 
+            FontWeight="Bold"
+            HorizontalAlignment="Left" 
+            Margin="106,10,0,0" 
+            VerticalAlignment="Top" 
+            Width="119" Height="26"/>
+
+        <Label 
+            Content="Drive Letter:" 
+            HorizontalAlignment="Left" 
+            Margin="4,43,0,0" 
+            VerticalAlignment="Top" 
+            RenderTransformOrigin="-0.316,0.501"/>
+        <ComboBox 
+            Name="mount_letter"
+            HorizontalAlignment="Left" 
+            Margin="106,46,0,0" 
+            VerticalAlignment="Top" 
+            Width="74" 
+            ItemsSource="{Binding available_drive_letters}" 
+            SelectedIndex="0" />
+
+        <CheckBox 
+            Name="mount_read_only"
+            Content="Mount read-only" 
+            HorizontalAlignment="Left" 
+            Margin="10,81,0,0" 
+            VerticalAlignment="Top" Padding="4,1,0,0"/>
+
+        <Button 
+            Content="Cancel" 
+            HorizontalAlignment="Left" 
+            Margin="81,111,0,0" 
+            VerticalAlignment="Top" 
+            Width="75"
+            Command="{Binding cancel_command}" RenderTransformOrigin="0.867,0.401"/>
+        <Button 
+            Content="Mount" 
+            HorizontalAlignment="Left" 
+            Margin="161,111,0,0" 
+            VerticalAlignment="Top" 
+            Width="75"
+            Command="{Binding mount_command}"/>
+    </Grid>
+</Fluent:RibbonWindow>

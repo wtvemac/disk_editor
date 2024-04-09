@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../common.props" />
+
+  <PropertyGroup>
+    <Description>DiscUtils FAT filesystem parser</Description>
+    <AssemblyTitle>DiscUtils.Fat</AssemblyTitle>
+    <Authors>Kenneth Bell;LordMike</Authors>
+    <TargetFrameworks>net40</TargetFrameworks>
+    <AssemblyName>DiscUtils.Fat</AssemblyName>
+    <PackageId>DiscUtils.Fat</PackageId>
+    <PackageTags>DiscUtils;Filesystem;FAT</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DiscUtils.Core\DiscUtils.Core.csproj" />
+  </ItemGroup>
+
+</Project>

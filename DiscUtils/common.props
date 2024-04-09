@@ -1,0 +1,40 @@
+<Project>
+  <!-- Package related stuff -->
+  <PropertyGroup>
+    <VersionPrefix>0.14.2</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
+    
+    <TargetFrameworks>netstandard2.0;netstandard1.5;net40;net45</TargetFrameworks>
+    
+    <PackageProjectUrl>https://github.com/DiscUtils/DiscUtils</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <!-- Assembly stuff -->
+  <PropertyGroup>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
+    
+    <GeneratePackageOnBuild Condition="'$(Configuration)' != 'Debug'">True</GeneratePackageOnBuild>
+  </PropertyGroup>
+  
+  <!-- Assembly Signing -->
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)../SigningKey.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  
+  <!-- Constants -->
+  <PropertyGroup>
+    <DefineConstants Condition="'$(TargetFramework)' == 'net40'">$(DefineConstants);NET40</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+</Project>

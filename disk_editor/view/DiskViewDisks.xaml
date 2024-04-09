@@ -1,0 +1,305 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:self="clr-namespace:disk_editor">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/disk_editor;component/view/DiskViewPartitions.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <self:DiskIconConverter x:Key="DiskIconConverter" />
+    <self:DiskCollationConverter x:Key="DiskCollationConverter" />
+    <self:DiskSizeConverter x:Key="DiskSizeConverter" />
+    <self:DiskStatusConverter x:Key="DiskStatusConverter" />
+    <self:DiskTypeConverter x:Key="DiskTypeConverter" />
+    <self:DiskWidthConverter x:Key="DiskWidthConverter" />
+    
+    <!--- -->
+    <Style x:Key="DiskOuter1LStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource DarkBackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="1,1,0,0" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedDisk.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush1}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="DiskOuter1RStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="#393939" />
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                            <Binding Path="id" />
+                            <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedDisk.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush4}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <!--- -->
+    <Style x:Key="DiskOuter2LStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="1,1,0,0" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedDisk.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush2}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="DiskOuter2RStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedDisk.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush3}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <!--- -->
+    <Style x:Key="DiskOuter3LStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="1,1,0,0" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedDisk.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush3}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="DiskOuter3RStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedDisk.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush2}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <!--- -->
+    <Style x:Key="DiskOuter4LStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="1,1,0,0" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedDisk.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush4}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="DiskOuter4RStyleTrigger" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+        <Style.Triggers>
+            <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                        <Binding Path="id" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:DiskView}}" Path="SelectedDisk.id" />
+                    </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectBoxBrush1}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--- -->
+    <!--- -->
+    
+    <DataTemplate x:Key="DiskTemplate">
+        <Grid Uid="{Binding id}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition>
+                    <ColumnDefinition.Width>
+                        <MultiBinding Converter="{StaticResource DiskWidthConverter}">
+                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource AncestorType={x:Type self:MainWindow}}" />
+                            <Binding Path="." ElementName="DiskCollection" />
+                            <Binding Path="." />
+                        </MultiBinding>
+                    </ColumnDefinition.Width>
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition>
+                    <RowDefinition.Style>
+                        <Style TargetType="{x:Type RowDefinition}">
+                            <Setter Property="Height" Value="94"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding layout}" Value="{x:Static self:DiskLayout.UTV}">
+                                    <Setter Property="Height" Value="114"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </RowDefinition.Style>
+                </RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Button Margin="0" Padding="0" Cursor="Hand">
+                <Button.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" Command="{Binding SelectDiskCommand, RelativeSource={RelativeSource AncestorType={x:Type self:DiskView}}}" CommandParameter="{Binding}"/>
+                    <MouseBinding MouseAction="RightClick" Command="{Binding SelectDiskCommand, RelativeSource={RelativeSource AncestorType={x:Type self:DiskView}}}" CommandParameter="{Binding}"/>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding DoubleClickCommand, RelativeSource={RelativeSource AncestorType={x:Type self:DiskView}}}" CommandParameter="{Binding}"/>
+                </Button.InputBindings>
+                <Button.Template>
+                    <ControlTemplate>
+                        <Border Style="{StaticResource DiskOuter1LStyleTrigger}" Grid.Column="0" Grid.Row="0">
+                            <Border Style="{StaticResource DiskOuter1RStyleTrigger}">
+                                <Border Style="{StaticResource DiskOuter2LStyleTrigger}">
+                                    <Border Style="{StaticResource DiskOuter2RStyleTrigger}">
+                                        <Border Style="{StaticResource DiskOuter3LStyleTrigger}">
+                                            <Border Style="{StaticResource DiskOuter3RStyleTrigger}">
+                                                <Border Style="{StaticResource DiskOuter4LStyleTrigger}">
+                                                    <Border Style="{StaticResource DiskOuter4RStyleTrigger}" Padding="3">
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="16"/>
+                                                                <RowDefinition Height="16"/>
+                                                                <RowDefinition Height="16"/>
+                                                                <RowDefinition Height="16"/>
+                                                                <RowDefinition Height="16"/>
+                                                                <RowDefinition Height="16"/>
+                                                            </Grid.RowDefinitions>
+
+                                                            <TextBlock Grid.Column="0" Grid.Row="0">
+                                                                <Image Source="{Binding Converter={StaticResource DiskIconConverter}}" Height="16" Width="16"/>
+                                                                <Label Content="{Binding name}" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="0" Padding="0"/>
+                                                            </TextBlock>
+                                                            <TextBlock Grid.Column="0">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="{x:Type TextBlock}">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding layout}" Value="{x:Static self:DiskLayout.UTV}">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                                <Setter Property="Grid.Row" Value="1"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                                <Label Content="" FontSize="12" Foreground="{DynamicResource TextBrush}" Margin="0" Padding="0"/>
+                                                            </TextBlock>
+
+                                                            <TextBlock Grid.Column="0">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="{x:Type TextBlock}">
+                                                                        <Setter Property="Grid.Row" Value="1"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding layout}" Value="{x:Static self:DiskLayout.UTV}">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                                <Setter Property="Grid.Row" Value="2"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                                <Label Content="{Binding Converter={StaticResource DiskSizeConverter}}" FontSize="12" Foreground="{DynamicResource TextBrush}" Margin="0" Padding="0"/>
+                                                            </TextBlock>
+                                                            <TextBlock Grid.Column="0">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="{x:Type TextBlock}">
+                                                                        <Setter Property="Grid.Row" Value="2"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding layout}" Value="{x:Static self:DiskLayout.UTV}">
+                                                                                <Setter Property="Grid.Row" Value="3"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                                <Label Content="{Binding Converter={StaticResource DiskTypeConverter}}" FontSize="12" Foreground="{DynamicResource TextBrush}"  Margin="0" Padding="0"/>
+                                                            </TextBlock>
+                                                            <TextBlock Grid.Column="0">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="{x:Type TextBlock}">
+                                                                        <Setter Property="Grid.Row" Value="3"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding layout}" Value="{x:Static self:DiskLayout.UTV}">
+                                                                                <Setter Property="Grid.Row" Value="4"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                                <Label Content="{Binding Converter={StaticResource DiskCollationConverter}}" FontSize="12" Foreground="{DynamicResource TextBrush}"  Margin="0" Padding="0"/>
+                                                            </TextBlock>
+                                                            <TextBlock Grid.Column="0">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="{x:Type TextBlock}">
+                                                                        <Setter Property="Grid.Row" Value="4"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding layout}" Value="{x:Static self:DiskLayout.UTV}">
+                                                                                <Setter Property="Grid.Row" Value="5"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                                <Label Content="{Binding Converter={StaticResource DiskStatusConverter}}" FontSize="12" Foreground="{DynamicResource TextBrush}"  Margin="0" Padding="0"/>
+                                                            </TextBlock>
+                                                        </Grid> 
+                                                    </Border>
+                                                </Border>
+                                            </Border>
+                                        </Border>
+                                    </Border>
+                                </Border>
+                            </Border>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <ContentControl Content="{Binding partition_table}" ContentTemplate="{StaticResource PartitionCollectionTemplate}" Grid.Column="1" Grid.Row="0" />
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="DiskCollectionTemplate">
+        <ItemsControl x:Name="DiskCollection" ItemsSource="{Binding}" ItemTemplate="{StaticResource DiskTemplate}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Uid="disk_collection_visual_stack" CanVerticallyScroll="False" Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.Template>
+                <ControlTemplate TargetType="{x:Type ItemsControl}">
+                    <ScrollViewer 
+                        Uid="disk_collection_visual_scroller"
+                        HorizontalScrollBarVisibility="Auto" 
+                        VerticalScrollBarVisibility="Auto" 
+                        Margin="0">
+                        <ItemsPresenter/>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+        </ItemsControl>
+    </DataTemplate>
+</ResourceDictionary>

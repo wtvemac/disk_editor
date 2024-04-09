@@ -1,0 +1,702 @@
+﻿<Fluent:RibbonWindow x:Class="disk_editor.BuildView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
+        xmlns:self="clr-namespace:disk_editor"
+        Title="WebTV Build" ResizeMode="CanResize" WindowStartupLocation="CenterOwner" Height="610" MinHeight="605">
+    <Window.Resources>
+        <self:ObjectLocationNameConverter x:Key="ObjectLocationNameConverter" />
+        <self:IsEqualConverter x:Key="IsEqualConverter" />
+    </Window.Resources>
+    <Window.Style>
+        <Style TargetType="{x:Type Fluent:RibbonWindow}" BasedOn="{StaticResource {x:Type Fluent:RibbonWindow}}">
+            <Setter Property="Width" Value="720"/>
+            <Setter Property="MinWidth" Value="720"/>
+            <Setter Property="MaxWidth" Value="720"/>
+            <Setter Property="Icon" Value="static/images/build-info.png"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="True">
+                    <Setter Property="Width" Value="460"/>
+                    <Setter Property="MinWidth" Value="460"/>
+                    <Setter Property="MaxWidth" Value="460"/>
+                    <Setter Property="Icon" Value="static/images/build-info.png"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                    <Setter Property="Width" Value="720"/>
+                    <Setter Property="MinWidth" Value="720"/>
+                    <Setter Property="MaxWidth" Value="720"/>
+                    <Setter Property="Icon" Value="static/images/inspect-build.png"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition>
+                <RowDefinition.Style>
+                    <Style TargetType="{x:Type RowDefinition}">
+                        <Setter Property="Height" Value="110"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding build_dialog.OnlyInfo}" Value="True"/>
+                                    <Condition Binding="{Binding build_dialog.SelectedObjectLocation.type}" Value="{x:Static self:ObjectLocationType.FILE_LOCATION}"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Height" Value="40"/>
+                            </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                <Setter Property="Height" Value="110"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RowDefinition.Style>
+            </RowDefinition>
+            <RowDefinition/>
+            <RowDefinition Height="44"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="480">
+            <Label Content="Partition Name:" Margin="0,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold">
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                        <Setter Property="FontFamily" Value="{StaticResource WindowFontFamily}"/>
+                        <Setter Property="FontWeight" Value="{StaticResource WindowFontWeight}"/>
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+            <Label Name="partition_name" Content="Name" FontWeight="Bold" Margin="110,10,0,0" Width="172" HorizontalAlignment="Left">
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                        <Setter Property="FontFamily" Value="{StaticResource WindowFontFamily}"/>
+                        <Setter Property="FontWeight" Value="{StaticResource WindowFontWeight}"/>
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+
+            <Label Content="Partition Size:" Margin="0,41,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold">
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                        <Setter Property="FontFamily" Value="{StaticResource WindowFontFamily}"/>
+                        <Setter Property="FontWeight" Value="{StaticResource WindowFontWeight}"/>
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+            <Label Name="partition_size" Content="0 MiB" Margin="110,41,0,0" VerticalAlignment="Top" Width="172" HorizontalAlignment="Left">
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                        <Setter Property="FontFamily" Value="{StaticResource WindowFontFamily}"/>
+                        <Setter Property="FontWeight" Value="{StaticResource WindowFontWeight}"/>
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+
+            <Label Content="Build Location:" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold">
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                        <Setter Property="FontFamily" Value="{StaticResource WindowFontFamily}"/>
+                        <Setter Property="FontWeight" Value="{StaticResource WindowFontWeight}"/>
+                        <Setter Property="Margin" Value="0,72,0,0"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="True">
+                                <Setter Property="Margin" Value="0,10,0,0"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                <Setter Property="Margin" Value="0,72,0,0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+            <ComboBox ItemsSource="{Binding build_dialog.BuildLocations, Mode=TwoWay}" SelectedIndex="0" Name="partition_build_locations" SelectionChanged="on_build_location_change" VerticalAlignment="Top" Width="297" HorizontalAlignment="Left">
+                <ComboBox.Style>
+                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Setter Property="Margin" Value="114,73,0,0"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="True">
+                                <Setter Property="Margin" Value="100,14,0,0"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                <Setter Property="Margin" Value="114,73,0,0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.Style>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type self:ObjectLocation}">
+                        <Label Content="{Binding Converter={StaticResource ObjectLocationNameConverter}}" FontSize="12" Margin="0,0,0,0" Padding="0,0,0,0">
+                            <Label.Style>
+                                <Style TargetType="{x:Type Label}">
+                                    <Setter Property="FontWeight" Value="Normal"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Value="True">
+                                            <DataTrigger.Binding>
+                                                <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                                                    <Binding Path="type" />
+                                                    <Binding RelativeSource="{RelativeSource AncestorType={x:Type self:BuildView}}" Path="SelectedBrowser" />
+                                                </MultiBinding>
+                                            </DataTrigger.Binding>
+                                            <Setter Property="FontWeight" Value="ExtraBlack"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Command="{Binding select_this_browser}" Name="select_browser" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Height="22">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Margin" Value="417,73,0,0"/>
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Setter Property="Content" Value="Select"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding build_dialog.IsWriting}" Value="True">
+                                <Setter Property="Content" Value="Writing"/>
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.SelectedObjectLocation.type}" Value="{x:Static self:ObjectLocationType.BROWSER0_LOCATION}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.SelectedObjectLocation.type}" Value="{x:Static self:ObjectLocationType.BROWSER1_LOCATION}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.SelectedObjectLocation.selected}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding build_dialog.IsWriting}" Value="False"/>
+                                    <Condition Binding="{Binding build_dialog.SelectedObjectLocation.selected}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+
+            <TextBox Name="info_file_path" Text="" TextWrapping="NoWrap" IsReadOnly="True" Margin="30,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="269">
+                <TextBox.Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding build_dialog.OnlyInfo}" Value="True"/>
+                                    <Condition Binding="{Binding build_dialog.SelectedObjectLocation.type}" Value="{x:Static self:ObjectLocationType.FILE_LOCATION}"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <Button Command="{Binding load_build_image}" Content="Find Image" Margin="0,50,30,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="71" Height="23">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding build_dialog.OnlyInfo}" Value="True"/>
+                                    <Condition Binding="{Binding build_dialog.SelectedObjectLocation.type}" Value="{x:Static self:ObjectLocationType.FILE_LOCATION}"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" Margin="0,0,0,0">
+            <Grid>
+                <GroupBox Header="Current Build" Name="current_build" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0,0" MinHeight="745" MinWidth="321">
+                    <GroupBox.Style>
+                        <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Type GroupBox}}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </GroupBox.Style>
+                    <StackPanel>
+                        <Grid Height="36">
+                            <Button Command="{Binding export_build_image}" Content="Export Build" Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="92" Height="23">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding build_dialog.IsWriting}" Value="True">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding build_dialog.CurrentLength}" Value="0">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Build Number:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_number" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Build Flags:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_flags" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Found Code Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_code_checksum" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Actual Code Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_calculated_code_checksum" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31"/>
+                        <Grid Height="31"/>
+
+                        <Grid Height="31">
+                            <Label Content="Build Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_length" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Code Checksumed Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_code_length" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Code Address:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_code_shrunk_offset" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Code Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_code_shrunk_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Jump Offset (start):" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_jump_offset" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Build Base:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_base" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="ROMFS Base:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_romfs_base" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Found ROMFS Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_romfs_checksum" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Actual ROMFS Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_calculated_romfs_checksum" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31"/>
+
+                        <Grid Height="31">
+                            <Label Content="ROMFS Checksumed Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_romfs_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Initial Heap Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_heap_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Heap Data Address:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_heap_data_offset" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Data Size (w/lzss):" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_heap_data_compressed_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Data Size (w/o lzss):" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="current_build_heap_data_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Grid.Column="1" Name="new_build" Header="Replacement Build" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" MinHeight="745" MinWidth="321">
+                    <GroupBox.Style>
+                        <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Type GroupBox}}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </GroupBox.Style>
+                    <StackPanel>
+                        <Grid Height="36">
+                            <TextBox Name="new_file_path" Text="" TextWrapping="NoWrap" IsReadOnly="True" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="213" FontSize="14"/>
+                            <Button Command="{Binding load_build_image}" Content="Find Image" Margin="0,10,6,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="76" Height="23"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Build Number:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_number" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Build Flags:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_flags" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Found Code Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_code_checksum" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Actual Code Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_calculated_code_checksum" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Use Actual Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <CheckBox Name="new_build_use_calculated_code_checksum" IsChecked="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="File Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_file_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Build Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.072,3.237"/>
+                            <TextBox Name="new_build_length" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Code Checksumed Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_code_length" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Code Address:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_code_shrunk_offset" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Code Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_code_shrunk_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Jump Offset (start):" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_jump_offset" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Build Base:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_base" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="ROMFS Base:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_romfs_base" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Found ROMFS Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_romfs_checksum" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Actual ROMFS Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_calculated_romfs_checksum" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Use Actual Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <CheckBox Name="new_build_use_calculated_romfs_checksum" IsChecked="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="ROMFS Checksumed Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_romfs_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Initial Heap Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_heap_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Heap Data Address:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_heap_data_offset" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Data Size (w/lzss):" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_heap_data_compressed_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Data Size (w/o lzss):" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_heap_data_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Collation:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="new_build_collation" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
+
+                <GroupBox Grid.Column="1" Name="info_build" Header="Build Information" Margin="0,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" MinHeight="650" MinWidth="321">
+                    <GroupBox.Style>
+                        <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Type GroupBox}}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </GroupBox.Style>
+                    <StackPanel>
+                        <Grid Height="31">
+                            <Label Content="Build Number:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_number" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Build Flags:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_flags" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Found Code Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_code_checksum" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Actual Code Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_calculated_code_checksum" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="File Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_file_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Build Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.072,3.237"/>
+                            <TextBox Name="info_build_length" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Code Checksum Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_code_length" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="RAM Code Address:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_code_shrunk_offset" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="RAM Code Size (Shrunk):" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_code_shrunk_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Jump Offset (start):" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_jump_offset" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Build Base:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_base" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="ROMFS Base:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_romfs_base" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Found ROMFS Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_romfs_checksum" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Actual ROMFS Checksum:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_calculated_romfs_checksum" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="ROMFS Checksum Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_romfs_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Initial Heap Size:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_heap_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Heap Data Address:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_heap_data_offset" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Heap Data Size (Shrunk):" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_heap_data_compressed_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Heap Data Size (Expanded):" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_heap_data_size" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+
+                        <Grid Height="31">
+                            <Label Content="Collation:" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="info_build_collation" Text="-" TextWrapping="NoWrap" IsReadOnly="True" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="136"/>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+        </ScrollViewer>
+
+        <Grid Grid.Row="2" Margin="0,0,0,0">
+            <Button Name="cancel_button" Command="{Binding cancel_command}"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="75">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Margin" Value="0,10,135,0"/>
+                        <Setter Property="Content" Value="Cancel"/>
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding build_dialog.IsWriting}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="True">
+                                <Setter Property="Margin" Value="0,10,20,0"/>
+                                <Setter Property="Content" Value="Close"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                <Setter Property="Margin" Value="0,10,135,0"/>
+                                <Setter Property="Content" Value="Cancel"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Name="submit_button" Content="Write New Build" Command="{Binding write_image_command}" HorizontalAlignment="Right" Margin="0,10,20,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.77,0.301">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding build_dialog.NewBuildFilename}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.NewBuildFilename}" Value="">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.IsWriting}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding build_dialog.OnlyInfo}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+    </Grid>
+</Fluent:RibbonWindow>

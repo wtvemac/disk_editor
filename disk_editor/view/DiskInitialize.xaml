@@ -1,0 +1,14 @@
+﻿<Fluent:RibbonWindow x:Class="disk_editor.DiskInitialize"
+        Style="{StaticResource {x:Type Fluent:RibbonWindow}}"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
+        xmlns:self="clr-namespace:disk_editor"
+        Title="Initialize Disk" Height="98" Width="318" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Icon="static/images/initialize-disk.png">
+    <Grid>
+        <Label Content="Target Layout:" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="target_layout" SelectedIndex="0" Margin="114,8,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="184"/>
+        <Button Command="{Binding cancel_command}" Content="Cancel" Margin="144,41,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
+        <Button Command="{Binding initilize_disk_command}" Content="Initilize" Margin="224,41,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
+    </Grid>
+</Fluent:RibbonWindow>

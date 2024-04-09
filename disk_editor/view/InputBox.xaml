@@ -1,0 +1,40 @@
+﻿<Fluent:RibbonWindow x:Class="disk_editor.InputBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:self="clr-namespace:disk_editor"                     
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="Please answer" Height="110" Width="350" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="44"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1">
+            <Label Name="question_text" Content="Enter your answer:" Padding="0,0,0,5"></Label>
+            <TextBox Name="string_input" Width="320"/>
+        </StackPanel>
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Button 
+                Content="Cancel" 
+                Width="75"
+                Command="{Binding cancel_command}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="0,0,90,0" />
+            <Button 
+                Content="Submit" 
+                Width="75"
+                Command="{Binding submit_command}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="0,0,10,0" />
+        </Grid>
+    </Grid>
+</Fluent:RibbonWindow>
